@@ -1,0 +1,31 @@
+{
+  "name": "hot_resume",
+  "version": "1.0.0",
+  "description": "Resume Builing application using MERN stack and Typescript",
+  "license": "ISC",
+  "author": "Abhijit Sengupta",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "nodemon dist/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mongoose": "^8.18.1",
+    "passport": "^0.7.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.3.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}
