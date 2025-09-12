@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 class AuthController {
     testServer(req:Request, res:Response) {
         try {
-            res.status(200).send({
+            return res.status(200).send({
                 status: 200,
                 message: 'The server is working'
             })
