@@ -8,7 +8,7 @@ const app:Application = express()
 app.set('trust proxy', false)
 dotenv.config()
 
-app.use(cors({origin: process.env.FRONTEND_URL, methods: "GET, POST, PUT, PATCH, DELETE"}))
+app.use(cors({origin: process.env.FRONTEND_URL, methods: "GET, POST, PUT, PATCH, DELETE", credentials: true}))
 app.use(express.urlencoded({
     extended: true
 }))
