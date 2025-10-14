@@ -11,7 +11,7 @@ const Navbar = () => {
                 <div className="flex justify-between items-center">
                     <div><Image alt='Navbar Logo' src="/images/logo/logo.png" width={100} height={100} /></div>
                     <div>
-                        <Link href={"/login"} className={`text-amber-500 rounded-full px-5 py-2.5 justify-between items-center max-w-fit bg-amber-500/25`}>
+                        <Link href={"/auth/login"} className={`text-amber-500 rounded-full px-5 py-2.5 justify-between items-center max-w-fit bg-amber-500/25`}>
 							<FontAwesomeIcon icon={faUser} width={15} className='inline-block relative bottom-0.5' /> Login
 						</Link>
                     </div>

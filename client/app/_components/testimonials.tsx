@@ -26,7 +26,6 @@ const allan = Allan({
     weight: '400'
 })
 
-
 const leonetta = localFonts({
     src: '../../fonts/leonetta.serif.otf'
 })
