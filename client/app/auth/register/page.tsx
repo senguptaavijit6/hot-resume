@@ -74,7 +74,7 @@ const RegisterPage = () => {
                     </div>
                 </div>
                 <div className="flex relative after:absolute after:content-[''] after:h-40 after:w-40 after:-right-10 after:top-5 after:rounded-full after:bg-sky-700 after:z-1">
-                    <div className='bg-gray-800 p-12 w-[100%] rounded-bl-4xl rounded-br-4xl text-white z-2 text-center'>Dont have an account? <Link href={'/auth/login'} className='text-sky-500 ms-2'>Login Now</Link></div>
+                    <div className='bg-gray-800 p-12 w-[100%] rounded-bl-4xl rounded-br-4xl text-white z-2 text-center'>Already an existing user? <Link href={'/auth/login'} className='text-sky-500 ms-2'>Login Now</Link></div>
                 </div>
             </div>
         </>
