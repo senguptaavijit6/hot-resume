@@ -25,7 +25,7 @@ const Footer = () => {
 
     return (
         <>
-            <section className='p-16 flex bg-gray-950 text-gray-500'>
+            <section className='p-16 flex bg-gray-950 text-gray-500 z-3 relative'>
                 <div className="footer-description basis-1/2">
                     <Image alt='Logo' src={'/images/logo/logo.png'} width={150} height={150} />
                     <h2 className='capitalize text-white text-2xl mt-5'>hot-resume-&lt;code&gt;-onrender.com</h2>
