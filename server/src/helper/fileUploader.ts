@@ -18,7 +18,7 @@ class FileUploader {
     upload: multer.Multer;
 
     constructor({
-        destination = "uploads/",
+        destination = "public/uploads/",
         supportedFileTypes = ["jpeg", "jpg", "png", "gif", "ico", "webp"],
         maxFileSize = 1024 * 1024 * 5, // 5 MB
     }: FileUploaderOptions = {}) {
