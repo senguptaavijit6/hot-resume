@@ -1,8 +1,6 @@
-import fs from 'node:fs'
-import multer from 'multer';
+import fs from 'node:fs';
+import multer, { StorageEngine } from 'multer';
 import { Request } from 'express';
-
-
 
 interface FileUploaderOptions {
     destination?: string;
@@ -15,53 +13,58 @@ class FileUploader {
     supportedFileTypes: string[];
     maxFileSize: number;
 
+    storage: StorageEngine;
+    fileFilter: multer.Options['fileFilter'];
+    upload: multer.Multer;
+
     constructor({
-        destination = "public/uploads/",
+        destination = "uploads/",
         supportedFileTypes = ["jpeg", "jpg", "png", "gif", "ico", "webp"],
-        maxFileSize = 1024 * 1024 * 5
+        maxFileSize = 1024 * 1024 * 5, // 5 MB
     }: FileUploaderOptions = {}) {
         this.destination = destination;
         this.supportedFileTypes = supportedFileTypes;
         this.maxFileSize = maxFileSize;
 
+        // Ensure upload directory exists
         if (!fs.existsSync(this.destination)) {
-            fs.mkdirSync(this.destination, { recursive: true })
+            fs.mkdirSync(this.destination, { recursive: true });
         }
-    }
 
-    checkFileType = (file_name: string):string => {
-        const file_name_arr:string[] = Array.from(file_name)
-        const indexOf:number = file_name_arr.lastIndexOf(".")
-        const ext:string = file_name_arr.slice(indexOf)[1]
-        return ext
-    }
+        // Configure storage
+        this.storage = multer.diskStorage({
+            destination: (req: Request, file, cb) => {
+                cb(null, this.destination);
+            },
+            filename: (req: Request, file, cb) => {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+                const ext = this.getFileExtension(file.originalname);
+                cb(null, `${file.fieldname}-${uniqueSuffix}.${ext}`);
+            },
+        });
 
-    storage = multer.diskStorage({
-        destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
-            cb(null, this.destination);
-        },
-        filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-            const ext = this.checkFileType(file.originalname)
-            cb(null, file.fieldname + '-' + uniqueSuffix + "." + ext)
-        }
-    })
+        // Configure file filter
+        this.fileFilter = (req, file, cb) => {
+            const ext = this.getFileExtension(file.originalname);
+            if (this.supportedFileTypes.includes(ext)) {
+                cb(null, true);
+            } else {
+                cb(new Error("Unsupported file type"));
+            }
+        };
 
-    fileFilter: multer.Options['fileFilter'] = (req, file, cb) => {
-        if (this.supportedFileTypes.includes(this.checkFileType(file.originalname))) {
-            cb(null, true);
-        } else {
-            cb(new Error("Unsupported file type"));
-        }
-    }
-
-    upload() {
-        return multer({
+        // Configure multer instance
+        this.upload = multer({
             storage: this.storage,
             fileFilter: this.fileFilter,
-            limits: { fileSize: this.maxFileSize }
+            limits: { fileSize: this.maxFileSize },
         });
+    }
+
+    private getFileExtension(filename: string): string {
+        const index = filename.lastIndexOf(".");
+        return index !== -1 ? filename.slice(index + 1).toLowerCase() : "";
     }
 }
 
-export default FileUploader
+export default FileUploader;
