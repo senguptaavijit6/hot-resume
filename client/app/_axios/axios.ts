@@ -3,7 +3,7 @@ import { Cookies } from "react-cookie";
 const cookie = new Cookies
 
 const axiosInstance = axios.create({
-    baseURL: process.env.NEXT_BACKEND_URL
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
 })
 
 axiosInstance.interceptors.request.use(
