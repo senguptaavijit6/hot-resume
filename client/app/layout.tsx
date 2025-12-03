@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "./_components/footer";
+import { ToastContainer } from "react-toastify";
+import { Provider } from "react-redux";
+import { userStore } from "./_redux/store/user.store";
+import ReduxStoreProvider from "./lib/reduxStoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,15 +28,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <html lang="en">
+    <ReduxStoreProvider>
+      <html lang="en">
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        {/* Footer */}
-        <Footer />
-      </body>
-    </html>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <ToastContainer />
+          {children}
+          {/* Footer */}
+          <Footer />
+        </body>
+      </html>
+    </ReduxStoreProvider>
   );
 }
