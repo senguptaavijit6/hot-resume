@@ -21,7 +21,7 @@ const authSchema = new mongoose.Schema({
         required: function(this: mongoose.Document & { loginProvider?: String }) {
             return this.loginProvider === "JWT";
         },
-        maxlength: 16
+        maxlength: 60
     },
     profilePicture: {
         type: String,
@@ -39,11 +39,26 @@ const authSchema = new mongoose.Schema({
         default: "JWT"
     },
 
+    // required: false = we cannot derive loginId if user logins with email and password (NORMAL LOGIN), || but required: true = if the user logs in using social media
     loginId: {
         type: String,
         required: function(this: mongoose.Document & { loginProvider: String }) {
             return this.loginProvider !== "JWT"
         }
+    },
+
+    // default: false = if the user registers using registration form || but default: true = if the user uses social media services to register
+    isVerified: { 
+        type: Boolean,
+        default: function(this: mongoose.Document & {loginProvider: String}) {
+            return this.loginProvider !== "JWT"
+        }
+    },
+
+    // this is to ask the user if the user wants to change the picture, and later on by default the last saved image will be used
+    isNewUser: {
+        type: Boolean,
+        default: true
     }
 }, {
     versionKey: false,
